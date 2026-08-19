@@ -2,7 +2,7 @@
   "name": "codasms-mcp",
   "version": "0.1.1",
   "mcpName": "io.github.ajemba/codasms-mcp",
-  "description": "MCP server for CODASMS — receive one-time SMS/OTP verification codes (get a number, wait for the code, release) across 700+ services and 180+ countries via the CODASMS Reseller API.",
+  "description": "MCP server for CODASMS \u2014 receive one-time SMS/OTP verification codes (get a number, wait for the code, release) across 700+ services and 180+ countries via the CODASMS Reseller API.",
   "keywords": [
     "mcp",
     "model-context-protocol",
@@ -18,6 +18,7 @@
   "license": "MIT",
   "author": "CODASMS",
   "type": "module",
+  "module": "src/index.ts",
   "bin": {
     "codasms-mcp": "dist/stdio.js"
   },
