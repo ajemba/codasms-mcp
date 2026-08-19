@@ -1,0 +1,25 @@
+# Smithery configuration — https://smithery.ai/docs
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - codasmsApiKey
+    properties:
+      codasmsApiKey:
+        type: string
+        title: CODASMS API key
+        description: Your coda_live_ reseller key from https://codasms.com/reseller
+      maxPriceCents:
+        type: integer
+        title: Max price per number (US cents)
+        description: Optional cap — get_number refuses any number priced above this.
+  commandFunction: |-
+    (config) => ({
+      command: 'node',
+      args: ['dist/stdio.js'],
+      env: {
+        CODASMS_API_KEY: config.codasmsApiKey,
+        ...(config.maxPriceCents ? { CODASMS_MAX_PRICE_CENTS: String(config.maxPriceCents) } : {})
+      }
+    })

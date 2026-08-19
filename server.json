@@ -1,0 +1,31 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "io.github.ajemba/codasms-mcp",
+  "description": "Receive one-time SMS/OTP verification codes — get a number, wait for the code, release — across 700+ services and 180+ countries via the CODASMS Reseller API.",
+  "repository": {
+    "url": "https://github.com/ajemba/codasms-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "codasms-mcp",
+      "version": "0.1.0",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "CODASMS_API_KEY",
+          "description": "Your coda_live_ reseller key from https://codasms.com/reseller",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "CODASMS_MAX_PRICE_CENTS",
+          "description": "Optional cap (US cents) — get_number refuses numbers priced above this.",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}
