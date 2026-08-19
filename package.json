@@ -1,6 +1,7 @@
 {
   "name": "codasms-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.ajemba/codasms-mcp",
   "description": "MCP server for CODASMS — receive one-time SMS/OTP verification codes (get a number, wait for the code, release) across 700+ services and 180+ countries via the CODASMS Reseller API.",
   "keywords": [
     "mcp",
