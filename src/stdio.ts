@@ -7,10 +7,13 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { createServer } from "./server.js";
 
 async function main() {
-  const apiKey = process.env.CODASMS_API_KEY;
+  // NOTE: we intentionally do NOT exit when the key is missing. The server must
+  // start and expose tools/list so registries (Glama, MCP inspector) can
+  // introspect it with no secret. Tool CALLS return a friendly error until a
+  // real key is provided.
+  const apiKey = process.env.CODASMS_API_KEY ?? "";
   if (!apiKey) {
-    console.error("CODASMS_API_KEY is not set. Get a key at https://codasms.com/reseller and export it.");
-    process.exit(1);
+    console.error("CODASMS_API_KEY is not set \u2014 starting in introspection mode; tool calls will fail until you set a coda_live_ key from https://codasms.com/reseller.");
   }
   const base = process.env.CODASMS_API_BASE || undefined;
   const maxPriceCents = process.env.CODASMS_MAX_PRICE_CENTS
