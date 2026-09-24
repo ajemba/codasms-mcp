@@ -50,14 +50,20 @@ export class CodaClient {
   private base: string;
 
   constructor(apiKey: string, base: string = DEFAULT_BASE) {
-    if (!apiKey || !apiKey.startsWith("coda_live_")) {
-      throw new Error("A CODASMS reseller API key (coda_live_...) is required. Get one at https://codasms.com/reseller.");
-    }
-    this.apiKey = apiKey;
+    // Do NOT throw when the key is missing/placeholder. The server must still
+    // start and answer tools/list for registry introspection (Glama, MCP
+    // inspector, etc.) with no secret present. Key validity is enforced lazily
+    // in request(), i.e. only when a tool actually calls the CODASMS API.
+    this.apiKey = apiKey ?? "";
     this.base = base.replace(/\/+$/, "");
   }
 
   private async request<T>(path: string, init: RequestInit & { idempotencyKey?: string } = {}): Promise<T> {
+    if (!this.apiKey || !this.apiKey.startsWith("coda_live_")) {
+      // Lazy key check: construction + tools/list work without a key, but any
+      // real API call needs a valid coda_live_ reseller key.
+      throw new CodaApiError("missing_or_malformed_key", 401);
+    }
     const headers: Record<string, string> = {
       Authorization: `Bearer ${this.apiKey}`,
       Accept: "application/json",
